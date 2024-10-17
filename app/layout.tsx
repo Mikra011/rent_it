@@ -3,6 +3,7 @@ import localFont from "next/font/local";
 import "./globals.css";
 import NavBar from "@/components/navbar /NavBar";
 import Providers from "./providers";
+import { ClerkProvider } from "@clerk/nextjs"
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -16,7 +17,7 @@ const geistMono = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "Rent It",
+  title: "Rent-It",
   description: "Find Your Perfect Stay.",
 };
 
@@ -26,16 +27,18 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        <main className="container py-10">
-          <Providers>
-            <NavBar />
-            {children}
-          </Providers>
+    <ClerkProvider>
+      <html lang="en" suppressHydrationWarning>
+        <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+          <main className="container py-10">
+            <Providers>
+              <NavBar />
+              {children}
+            </Providers>
 
-        </main>
-      </body>
-    </html>
+          </main>
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }
