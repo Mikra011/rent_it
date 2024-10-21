@@ -6,7 +6,8 @@
     "dev": "next dev & open http://localhost:3000",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "push": "prisma db push"
   },
   "dependencies": {
     "@clerk/nextjs": "^5.7.3",
