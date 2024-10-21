@@ -30,8 +30,23 @@ export const createProfileAction = async (
             }
         })
     } catch (error) { 
-        console.log(error.message)
         return { message: error instanceof Error ? error.message : 'There is an error' }
     }
     redirect('/')
+}
+
+export const fetchProfileImage = async () => {
+    const user = await currentUser()
+    if(!user) return null
+
+    const profile = await db.profile.findUnique({
+        where: {
+            clerkId: user.id,
+        },
+        select: {
+            profileImage: true,
+        }
+    })
+
+    return profile?.profileImage
 }
