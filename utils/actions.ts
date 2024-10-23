@@ -1,6 +1,6 @@
 'use server'
 
-import { imageSchema, profileSchema, validateWithZodschema } from "./schemas"
+import { imageSchema, profileSchema, propertySchema, validateWithZodschema } from "./schemas"
 import db from './db'
 import { auth, clerkClient, currentUser } from "@clerk/nextjs/server"
 import { revalidatePath } from "next/cache"
@@ -130,4 +130,20 @@ export const updateProfileImageAction = async (
 
         return showError(err)
     }
+}
+
+export const createPropertyAction = async(
+    prevState: any,
+    formData: FormData
+): Promise<{ message: string }> => {
+    const user = await getAuthUser()
+    try {
+        const rawData = Object.fromEntries(formData)
+        const validatedFields = validateWithZodschema(propertySchema, rawData)
+
+        return { message: "property created"}
+    } catch (error) {
+        return showError(error)
+    }
+    // redirect('/')
 }
