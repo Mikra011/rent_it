@@ -2,6 +2,7 @@ import FormInput from '@/components/form/FormInput';
 import FormContainer from '@/components/form/FormContainer';
 import { createPropertyAction } from '@/utils/actions';
 import SubmitButton from "@/components/form/Buttons"
+import PriceInput from '@/components/form/PriceInput';
 
 function createPropertyPage() {
     return (
@@ -29,7 +30,7 @@ function createPropertyPage() {
                             defaultValue='Your dream rental awaits you!'
                             placeholder='Type tagline here'
                         />
-
+                        <PriceInput />
                     </div>
                     <SubmitButton 
                     text='Create Rental' 
