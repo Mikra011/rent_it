@@ -41,17 +41,19 @@ function createPropertyPage() {
                     </div>
                     <TextAreaInput
                         name='description'
-                        labelText='Description (10-1000 words)' 
-                        />
+                        labelText='Description (10-1000 words)'
+                    />
                     <div className='grid sm:grid-cols-2 gap-8 mt-4'>
                         <CountriesInput defaultValue='HU' />
                         <ImageInput />
                     </div>
+
                     <h3 className='text-lg mt-8 mb-4 font-medium'>Accomodation Details</h3>
-                    <CounterInput detail='guests'/>
-                    <CounterInput detail='bedrooms'/>
-                    <CounterInput detail='beds'/>
-                    <CounterInput detail='baths'/>
+                    <CounterInput detail='guests' />
+                    <CounterInput detail='bedrooms' />
+                    <CounterInput detail='beds' />
+                    <CounterInput detail='baths' />
+
                     <h3 className='text-lg mt-8 mb-4 font-medium'>Amenites</h3>
                     <AmenitiesInput />
                     <SubmitButton
