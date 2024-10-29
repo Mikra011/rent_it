@@ -1,6 +1,7 @@
+import LoadingCards from "@/components/card/LoadingCards"
 import CategoriesList from "@/components/home/CategoriesList"
 import PropertiesContaner from "@/components/home/PropertiesContaner"
-import { Button } from "@/components/ui/button"
+import { Suspense } from "react"
 
 export default function Home({
   searchParams
@@ -17,10 +18,16 @@ export default function Home({
         category={searchParams.category}
         search={searchParams.search}
       />
-      <PropertiesContaner
-        category={searchParams.category}
-        search={searchParams.search}
-      />
+
+      {/* Use Suspense to show SkeletonCard loading state 
+      while data fetches in PropertiesContainer */}
+      <Suspense fallback={<LoadingCards />}>
+        <PropertiesContaner
+          category={searchParams.category}
+          search={searchParams.search}
+        />
+      </Suspense>
+
     </section>
   )
 }
