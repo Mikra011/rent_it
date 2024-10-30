@@ -14,7 +14,7 @@ export const profileSchema = z.object({
         .max(15, { message: 'User Name is too long' }),
 })
 
-export function validateWithZodschema<T>(
+export function validateWithZodSchema<T>(
     schema: ZodSchema<T>,
     data: unknown
 ): T {
@@ -91,4 +91,10 @@ export const propertySchema = z.object({
         message: 'bahts amount must be a positive number.',
     }),
     amenities: z.string(),
+})
+
+export const createReviewSchema = z.object({
+    propertyId: z.string(),
+    rating: z.coerce.number().int().min(1).max(5),
+    comment: z.string().min(10).max(1000),
 })

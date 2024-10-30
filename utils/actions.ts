@@ -1,6 +1,12 @@
 'use server'
 
-import { imageSchema, profileSchema, propertySchema, validateWithZodschema } from "./schemas"
+import {
+    createReviewSchema,
+    imageSchema,
+    profileSchema,
+    propertySchema,
+    validateWithZodSchema
+} from "./schemas"
 import db from './db'
 import { auth, clerkClient, currentUser } from "@clerk/nextjs/server"
 import { revalidatePath } from "next/cache"
@@ -32,7 +38,7 @@ export const createProfileAction = async (
         if (!user) throw new Error('Please login to create a profile')
 
         const rawData = Object.fromEntries(formData)
-        const validatedFields = validateWithZodschema(profileSchema, rawData)
+        const validatedFields = validateWithZodSchema(profileSchema, rawData)
 
         await db.profile.create({
             data: {
@@ -88,7 +94,7 @@ export const UpdateProfileAction = async (
     const user = await getAuthUser()
     try {
         const rawData = Object.fromEntries(formData)
-        const validatedFields = validateWithZodschema(profileSchema, rawData)
+        const validatedFields = validateWithZodSchema(profileSchema, rawData)
 
         await db.profile.update({
             where: {
@@ -112,7 +118,7 @@ export const updateProfileImageAction = async (
 
     try {
         const image = formData.get('image') as File
-        const validatedFields = validateWithZodschema(imageSchema, { image })
+        const validatedFields = validateWithZodSchema(imageSchema, { image })
         const fullPath = await uploadImage(validatedFields.image)
 
         await db.profile.update({
@@ -141,8 +147,8 @@ export const createPropertyAction = async (
         const rawData = Object.fromEntries(formData)
         const file = formData.get('image') as File
 
-        const validatedFields = validateWithZodschema(propertySchema, rawData)
-        const validateFile = validateWithZodschema(imageSchema, { image: file })
+        const validatedFields = validateWithZodSchema(propertySchema, rawData)
+        const validateFile = validateWithZodSchema(imageSchema, { image: file })
 
         const fullPath = await uploadImage(validateFile.image)
         await db.property.create({
@@ -266,4 +272,55 @@ export const fetchPropertyDetails = (id: string) => {
             profile: true,
         },
     })
+}
+
+export async function createReviewAction(prevState: any, formData: FormData) {
+    const user = await getAuthUser()
+    try {
+        const rawData = Object.fromEntries(formData)
+
+        const validatedFields = validateWithZodSchema(createReviewSchema, rawData)
+
+        await db.review.create({
+            data: {
+                ...validatedFields,
+                profileId: user.id,
+            },
+        })
+        revalidatePath(`/properties/${validatedFields.propertyId}`)
+        return { message: 'Review submitted successfully' }
+    } catch (error) {
+        return showError(error)
+    }
+}
+
+export async function fetchPropertyReviews(propertyId: string) {
+    const reviews = await db.review.findMany({
+        where: {
+            propertyId,
+        },
+        select: {
+            id: true,
+            rating: true,
+            comment: true,
+            profile: {
+                select: {
+                    firstName: true,
+                    profileImage: true,
+                },
+            },
+        },
+        orderBy: {
+            createdAt: 'desc',
+        },
+    })
+    return reviews
+}
+
+export const fetchPropertyReviewsByUser = async () => {
+    return { message: 'fetch user reviews' }
+}
+
+export const deleteReviewAction = async () => {
+    return { message: 'delete  reviews' }
 }
