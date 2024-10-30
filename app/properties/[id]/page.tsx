@@ -10,7 +10,7 @@ import ShareButton from "@/components/properties/ShareButton"
 import UserInfo from "@/components/properties/UserInfo"
 import { Skeleton } from "@/components/ui/skeleton"
 import { fetchPropertyDetails } from "@/utils/actions"
-import { Separator } from "@radix-ui/react-dropdown-menu"
+import { Separator } from '@/components/ui/separator'
 import dynamic from "next/dynamic"
 import { redirect } from "next/navigation"
 
