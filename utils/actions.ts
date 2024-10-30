@@ -72,7 +72,7 @@ export const fetchProfileImage = async () => {
 
 export const fetchProfile = async () => {
     const user = await getAuthUser()
-    const profile = db.profile.findUnique({
+    const profile = await db.profile.findUnique({
         where: {
             clerkId: user.id,
         }

@@ -26,19 +26,19 @@ async function ProfilePage() {
                             name='firstName'
                             label='first name'
                             placeholder="Type first name here"
-                            defaultValue={profile?.firstName} />
+                            defaultValue={profile.firstName} />
                         <FormInput
                             type='text'
                             name='lastName'
                             label='last name'
                             placeholder="Type last name here"
-                            defaultValue={profile?.lastName} />
+                            defaultValue={profile.lastName} />
                         <FormInput
                             type='text'
                             name='userName'
                             label='user name'
                             placeholder="Type username here"
-                            defaultValue={profile?.userName} />
+                            defaultValue={profile.userName} />
                     </div>
                     <SubmitButton
                         text='update profile'
