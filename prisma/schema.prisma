@@ -21,7 +21,7 @@ model Profile {
   properties   Property[]
   favorites    Favorite[]
   Review       Review[]
-  Booking      Booking[]
+  bookings     Booking[]
 }
 
 model Property {
@@ -44,7 +44,7 @@ model Property {
   profileId   String
   favorites   Favorite[]
   Review      Review[]
-  Booking     Booking[]
+  bookings    Booking[]
 }
 
 model Favorite {
