@@ -442,3 +442,46 @@ export const createBookingAction = async (prevState: {
     }
     redirect(`/checkout?bookingId=${bookingId}`)
 }
+
+export const fetchBookings = async () => {
+    const user = await getAuthUser()
+    const bookings = await db.booking.findMany({
+        where: {
+            profileId: user.id,
+            paymentStatus: false, // just for now
+        },
+        include: {
+            property: {
+                select: {
+                    id: true,
+                    name: true,
+                    country: true,
+                },
+            },
+        },
+
+        orderBy: {
+            checkIn: 'desc',
+        },
+    })
+    return bookings
+}
+
+export async function deleteBookingAction(prevState: { bookingId: string }) {
+    const { bookingId } = prevState
+    const user = await getAuthUser()
+
+    try {
+        const result = await db.booking.delete({
+            where: {
+                id: bookingId,
+                profileId: user.id,
+            },
+        })
+
+        revalidatePath('/bookings')
+        return { message: 'Booking deleted successfully' }
+    } catch (error) {
+        return showError(error)
+    }
+}
