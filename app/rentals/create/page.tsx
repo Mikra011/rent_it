@@ -1,14 +1,14 @@
-import FormInput from '@/components/form/FormInput';
-import FormContainer from '@/components/form/FormContainer';
-import { createPropertyAction } from '@/utils/actions';
+import FormInput from '@/components/form/FormInput'
+import FormContainer from '@/components/form/FormContainer'
+import { createPropertyAction } from '@/utils/actions'
 import SubmitButton from "@/components/form/Buttons"
-import PriceInput from '@/components/form/PriceInput';
-import CategoryInput from '@/components/form/CategoryInput';
-import TextAreaInput from '@/components/form/TextAreaInput';
-import CountriesInput from '@/components/form/CountriesInput';
-import ImageInput from '@/components/form/ImageInput';
-import CounterInput from '@/components/form/CounterInput';
-import AmenitiesInput from '@/components/form/AmenitiesInput';
+import PriceInput from '@/components/form/PriceInput'
+import CategoryInput from '@/components/form/CategoryInput'
+import TextAreaInput from '@/components/form/TextAreaInput'
+import CountriesInput from '@/components/form/CountriesInput'
+import ImageInput from '@/components/form/ImageInput'
+import CounterInput from '@/components/form/CounterInput'
+import AmenitiesInput from '@/components/form/AmenitiesInput'
 
 function createPropertyPage() {
     return (
