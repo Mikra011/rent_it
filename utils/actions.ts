@@ -448,7 +448,7 @@ export const fetchBookings = async () => {
     const bookings = await db.booking.findMany({
         where: {
             profileId: user.id,
-            paymentStatus: false, // just for now
+            paymentStatus: false, // do not forget
         },
         include: {
             property: {
@@ -504,7 +504,7 @@ export const fetchRentals = async () => {
             const totalNightsSum = await db.booking.aggregate({
                 where: {
                     propertyId: rental.id,
-                    paymentStatus: true,
+                    paymentStatus: false, // do not forget
                 },
                 _sum: {
                     totalNights: true,
@@ -514,7 +514,7 @@ export const fetchRentals = async () => {
             const orderTotalSum = await db.booking.aggregate({
                 where: {
                     propertyId: rental.id,
-                    paymentStatus: true, // do not forget it
+                    paymentStatus: false, // do not forget
                 },
                 _sum: {
                     orderTotal: true,
@@ -615,4 +615,31 @@ export const updatePropertyImageAction = async (
     } catch (error) {
         return showError(error)
     }
+}
+
+export const fetchReservations = async () => {
+    const user = await getAuthUser()
+
+    const reservations = await db.booking.findMany({
+        where: {
+            paymentStatus: false, // do not fogrget
+            property: {
+                profileId: user.id,
+            },
+        },
+        orderBy: {
+            createdAt: 'desc',
+        },
+        include: {
+            property: {
+                select: {
+                    id: true,
+                    name: true,
+                    price: true,
+                    country: true,
+                },
+            },
+        },
+    })
+    return reservations
 }
