@@ -2,7 +2,6 @@ import { fetchReservations } from '@/utils/actions'
 import Link from 'next/link'
 import EmptyList from '@/components/home/EmptyList'
 import CountryFlagAndName from '@/components/card/CountryFlagAndName'
-
 import { formatDate, formatCurrency } from '@/utils/format'
 import {
     Table,
@@ -13,6 +12,7 @@ import {
     TableHeader,
     TableRow,
 } from '@/components/ui/table'
+import Stats from '@/components/reservations/Stats'
 
 async function ReservationsPage() {
     const reservations = await fetchReservations()
@@ -20,6 +20,7 @@ async function ReservationsPage() {
 
     return (
         <>
+            <Stats />
             <div className='mt-16'>
                 <h4 className='mb-4 capitalize'>
                     total reservations : {reservations.length}
