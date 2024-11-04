@@ -1,12 +1,13 @@
-'use client';
-import { useState } from 'react';
-import Image from 'next/image';
-import { Button } from '../ui/button';
-import FormContainer from './FormContainer';
-import ImageInput from './ImageInput';
-import SubmitButton from './Buttons';
-import { type actionFunction } from '@/utils/types';
-import { LuUser2 } from 'react-icons/lu';
+'use client'
+
+import { useState } from 'react'
+import Image from 'next/image'
+import { Button } from '../ui/button'
+import FormContainer from './FormContainer'
+import ImageInput from './ImageInput'
+import SubmitButton from './Buttons'
+import { type actionFunction } from '@/utils/types'
+import { LuUser2 } from 'react-icons/lu'
 
 type ImageInputContainerProps = {
     image: string;
@@ -14,7 +15,7 @@ type ImageInputContainerProps = {
     action: actionFunction;
     text: string;
     children?: React.ReactNode;
-};
+}
 
 function ImageInputContainer(props: ImageInputContainerProps) {
     const { image, name, action, text } = props
