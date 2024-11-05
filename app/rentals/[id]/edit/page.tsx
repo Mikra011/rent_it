@@ -22,6 +22,7 @@ import {
     if (!property) redirect('/')
   
     const defaultAmenities: Amenity[] = JSON.parse(property.amenities)
+    const imageUrls = property.images.map(img => img.url)
   
     return (
       <section>
@@ -31,7 +32,7 @@ import {
             name={property.name}
             text='Update Image'
             action={updatePropertyImageAction}
-            image={property.image}
+            image={imageUrls[0]}
           >
             <input type='hidden' name='id' value={property.id} />
           </ImageInputContainer>

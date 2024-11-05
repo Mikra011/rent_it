@@ -576,6 +576,9 @@ export const fetchRentalDetails = async (propertyId: string) => {
             id: propertyId,
             profileId: user.id,
         },
+        include: {
+            images: true, // Include the images relation
+        },
     })
 }
 
@@ -606,7 +609,7 @@ export const updatePropertyAction = async (
     }
 }
 
-export const updatePropertyImagesAction = async (
+export const updatePropertyImageAction = async (
     prevState: any,
     formData: FormData
 ): Promise<{ message: string }> => {
