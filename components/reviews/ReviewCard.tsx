@@ -7,7 +7,7 @@ type ReviewCardProps = {
         comment: string,
         rating: number,
         name: string,
-        image: string,
+        image: string | null,
     }
     children?: React.ReactNode,
 }
@@ -17,12 +17,16 @@ function ReviewCard({ reviewInfo, children }: ReviewCardProps) {
         <Card className='relative'>
             <CardHeader>
                 <div className='flex items-center'>
-                    {/* eslint-disable-next-line */}
-                    <img
-                        src={reviewInfo.image}
-                        alt='profile'
-                        className='w-12 h-12 rounded-full object-cover'
-                    />
+                    {reviewInfo.image ? (
+                        // eslint-disable-next-line 
+                        <img 
+                            src={reviewInfo.image}
+                            alt='profile'
+                            className='w-12 h-12 rounded-full object-cover'
+                        />
+                    ) : (
+                        <div className='w-12 h-12 rounded-full bg-gray-300' /> // Placeholder if image is null
+                    )}
                     <div className='ml-4'>
                         <h3 className='text-sm font-bold capitalize mb-1'>
                             {reviewInfo.name}
@@ -34,9 +38,9 @@ function ReviewCard({ reviewInfo, children }: ReviewCardProps) {
             <CardContent>
                 <Comment comment={reviewInfo.comment} />
             </CardContent>
-            {/* delete button later */}
             <div className='absolute top-3 right-3'>{children}</div>
         </Card>
     )
 }
+
 export default ReviewCard

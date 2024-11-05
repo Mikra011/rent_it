@@ -18,7 +18,10 @@ async function ReviewsPage() {
             <section className='grid md:grid-cols-2 gap-8 mt-4 '>
                 {reviews.map((review) => {
                     const { comment, rating } = review
-                    const { name, image } = review.property
+                    const { name, images } = review.property
+
+                    const image = images.length > 0 ? images[0].url : null
+                    
                     const reviewInfo = {
                         comment,
                         rating,
