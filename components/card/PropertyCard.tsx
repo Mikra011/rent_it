@@ -7,7 +7,7 @@ import { PropertyCardProps } from '@/utils/types'
 import { formatCurrency } from '@/utils/format'
 
 function PropertyCard({ property }: { property: PropertyCardProps }) {
-    const { name, image, price } = property
+    const { name, images, price } = property
     const { country, id: propertyId, tagline } = property
 
     return (
@@ -15,7 +15,7 @@ function PropertyCard({ property }: { property: PropertyCardProps }) {
             <Link href={`/properties/${propertyId}`}>
                 <div className='relative h-[300px] mb-2 overflow-hidden rounded-md'>
                     <Image
-                        src={image}
+                        src={images[1]}
                         fill
                         sizes='(max-width:768px) 100vw, 50vw'
                         alt={name}

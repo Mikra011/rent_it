@@ -154,17 +154,21 @@ export const createPropertyAction = async (
     const user = await getAuthUser()
     try {
         const rawData = Object.fromEntries(formData)
-        const file = formData.get('image') as File
+        const files = formData.getAll('images') as File[]
 
         const validatedFields = validateWithZodSchema(propertySchema, rawData)
-        const validateFile = validateWithZodSchema(imageSchema, { image: file })
+        const uploadedImages = await Promise.all(files.map(async (file) => {
+            const validateFile = validateWithZodSchema(imageSchema, { image: file })
+            return uploadImage(validateFile.image)
+        }))
 
-        const fullPath = await uploadImage(validateFile.image)
         await db.property.create({
             data: {
                 ...validatedFields,
-                image: fullPath,
                 profileId: user.id,
+                images: {
+                    create: uploadedImages.map(url => ({ url })),
+                },
             }
         })
     } catch (error) {
@@ -193,7 +197,7 @@ export const fetchProperties = async ({
             name: true,
             tagline: true,
             country: true,
-            image: true,
+            images: { select: { url: true } },
             price: true,
         },
         orderBy: {
@@ -264,7 +268,7 @@ export const fetchFavorites = async () => {
                     tagline: true,
                     country: true,
                     price: true,
-                    image: true,
+                    images: { select: { url: true } },
                 },
             },
         },
@@ -285,6 +289,11 @@ export const fetchPropertyDetails = (id: string) => {
                     checkOut: true,
                 },
             },
+            images: {
+                select: {
+                    url: true, // Only fetch the URL field
+                },
+            }
         },
     })
 }
@@ -345,7 +354,7 @@ export const fetchPropertyReviewsByUser = async () => {
             property: {
                 select: {
                     name: true,
-                    image: true,
+                    images: { select: { url: true } },
                 },
             },
         },
@@ -597,7 +606,7 @@ export const updatePropertyAction = async (
     }
 }
 
-export const updatePropertyImageAction = async (
+export const updatePropertyImagesAction = async (
     prevState: any,
     formData: FormData
 ): Promise<{ message: string }> => {
@@ -605,9 +614,11 @@ export const updatePropertyImageAction = async (
     const propertyId = formData.get('id') as string
 
     try {
-        const image = formData.get('image') as File
-        const validatedFields = validateWithZodSchema(imageSchema, { image })
-        const fullPath = await uploadImage(validatedFields.image)
+        const files = formData.getAll('images[]') as File[]
+        const uploadedImages = await Promise.all(files.map(async (file) => {
+            const validateFile = validateWithZodSchema(imageSchema, { image: file })
+            return uploadImage(validateFile.image)
+        }))
 
         await db.property.update({
             where: {
@@ -615,11 +626,13 @@ export const updatePropertyImageAction = async (
                 profileId: user.id,
             },
             data: {
-                image: fullPath,
+                images: {
+                    create: uploadedImages.map(url => ({ url })),
+                },
             },
         })
         revalidatePath(`/rentals/${propertyId}/edit`)
-        return { message: 'Property Image Updated Successful' }
+        return { message: 'Property Images Updated Successfully' }
     } catch (error) {
         return showError(error)
     }

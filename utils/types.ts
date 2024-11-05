@@ -5,7 +5,7 @@ export type actionFunction = (
 ) => Promise<{ message: string }>
 
 export type PropertyCardProps = {
-    image: string,
+    images: string[],
     id: string,
     name: string,
     tagline: string,

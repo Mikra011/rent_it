@@ -58,7 +58,7 @@ async function PropertyDetailsPage({
                 </div>
             </header>
 
-            <ImageContainer mainImage={property.image} name={property.name} />
+            <ImageContainer mainImage={property.images} name={property.name} />
 
             <section className='lg:grid lg:grid-cols-12 gap-x-12 mt-12'>
                 <div className="lg:col-span-8">

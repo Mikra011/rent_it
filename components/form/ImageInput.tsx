@@ -2,7 +2,7 @@ import { Input } from "../ui/input"
 import { Label } from "../ui/label"
 
 function ImageInput() {
-    const name = 'image'
+    const name = 'images'
     return (
         <div className="mb-2">
             <Label
@@ -15,7 +15,9 @@ function ImageInput() {
                 id={name}
                 name={name}
                 type="file"
-                required accept="image/*"
+                required
+                multiple 
+                accept="image/*"
                 className="max-w-xs"
             />
         </div>

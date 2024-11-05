@@ -4,13 +4,13 @@ function ImageContainer({
     mainImage,
     name,
 }: {
-    mainImage: string,
+    mainImage: { url: string }[],
     name: string,
 }) {
     return (
         <section className='h-[300px] md:h-[500px] relative mt-8'>
             <Image
-                src={mainImage}
+                src={mainImage[2].url}
                 fill
                 sizes='100vw'
                 alt={name}

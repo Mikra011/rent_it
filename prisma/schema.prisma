@@ -29,7 +29,6 @@ model Property {
   name        String
   tagline     String
   category    String
-  image       String
   country     String
   description String
   price       Int
@@ -45,6 +44,15 @@ model Property {
   favorites   Favorite[]
   Review      Review[]
   bookings    Booking[]
+  images      Image[]
+}
+
+model Image {
+  id         String   @id @default(uuid())
+  url        String
+  property   Property @relation(fields: [propertyId], references: [id], onDelete: Cascade)
+  propertyId String
+  createdAt  DateTime @default(now())
 }
 
 model Favorite {

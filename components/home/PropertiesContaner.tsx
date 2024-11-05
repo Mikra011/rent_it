@@ -10,10 +10,10 @@ async function PropertiesContainer({
     category?: string;
     search?: string;
 }) {
-    const properties: PropertyCardProps[] = await fetchProperties({
-        category,
-        search,
-    })
+    const properties: PropertyCardProps[] = (await fetchProperties({ category, search })).map((p) => ({
+        ...p,
+        images: p.images.map(img => img.url),
+    }))
     if (properties.length === 0) {
         return (
             <EmptyList
