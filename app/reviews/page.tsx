@@ -19,6 +19,7 @@ async function ReviewsPage() {
                 {reviews.map((review) => {
                     const { comment, rating } = review
                     const { name, images } = review.property
+                    
 
                     const image = images.length > 0 ? images[0].url : null
                     
