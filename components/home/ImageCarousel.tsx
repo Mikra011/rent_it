@@ -54,8 +54,7 @@ function ImageCarousel({ images, altText, propertyId }: ImageCarouselProps) {
                 {images.map((_, index) => (
                     <div
                         key={index}
-                        className={`w-2.5 h-2.5 rounded-full bg-white opacity-60 transition-opacity duration-300 ${currentImageIndex === index ? 'opacity-100' : ''
-                            }`}
+                        className={`w-2.5 h-2.5 rounded-full bg-white transition-opacity duration-300 ${currentImageIndex === index ? 'opacity-100' : 'opacity-60'}`}
                     ></div>
                 ))}
             </div>
