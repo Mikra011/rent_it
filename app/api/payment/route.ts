@@ -48,6 +48,7 @@ export const POST = async (req: NextRequest) => {
     try {
         // Create the Stripe Checkout session with multiple images
         const session = await stripe.checkout.sessions.create({
+            ui_mode: 'embedded',
             metadata: { bookingId: booking.id },
             line_items: [
                 {
